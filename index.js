@@ -21,7 +21,17 @@ const typeDefs = gql`
   }
 `;
 if (production !== "true") console.log(process.env);
+class BasicLogging {
+  requestDidStart({ queryString, parsedQuery, variables }) {
+    const query = queryString || print(parsedQuery);
+    console.log(query);
+    console.log(variables);
+  }
 
+  willSendResponse({ graphqlResponse }) {
+    console.log(JSON.stringify(graphqlResponse, null, 2));
+  }
+}
 const driver = neo4j.driver(neoUri, neo4j.auth.basic(neoUser, neoPass));
 
 const neoSchema = new Neo4jGraphQL({ typeDefs, driver });
@@ -30,6 +40,7 @@ neoSchema.getSchema().then((schema) => {
   const server = new ApolloServer({
     schema: schema,
     introspection: production !== "true",
+    extensions: production !== "true" && [() => new BasicLogging()],
   });
 
   server.listen().then(({ url }) => {
