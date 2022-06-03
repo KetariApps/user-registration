@@ -6,6 +6,7 @@ const port = process.env.PORT;
 const neoUri = process.env.NEOURI;
 const neoPass = process.env.NEOPASS;
 const neoUser = process.env.NEOUSER;
+const production = process.env.PRODUCTION;
 
 const typeDefs = gql`
   type Person @node(label: "Person", additionalLabels: ["EmailList"]) {
@@ -26,6 +27,7 @@ const neoSchema = new Neo4jGraphQL({ typeDefs, driver });
 neoSchema.getSchema().then((schema) => {
   const server = new ApolloServer({
     schema: schema,
+    introspection: production !== "true",
   });
 
   server.listen().then(({ url }) => {
