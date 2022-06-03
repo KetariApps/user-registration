@@ -20,7 +20,7 @@ const typeDefs = gql`
     people: [Person!]! @relationship(type: "USES", direction: IN)
   }
 `;
-if (production !== "true") console.log(process.env);
+console.log(process.env);
 
 const driver = neo4j.driver(neoUri, neo4j.auth.basic(neoUser, neoPass));
 
