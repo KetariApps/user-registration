@@ -9,6 +9,6 @@ COPY index.js package*.json app/
 # Changes working directory to the new directory just created
 WORKDIR /app
 # Installs npm dependencies on container
-RUN npm ci
+RUN npm install
 # Command container will actually run when called
 CMD ["node", "index.js"]
