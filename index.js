@@ -13,10 +13,11 @@ const typeDefs = gql`
     firstName: String!
     lastName: String!
     email: String!
-    usesApplication: [Application!]! @relationship(type: "USES", direction: OUT)
+    applications: [Application!]! @relationship(type: "USES", direction: OUT)
   }
   type Application {
     name: String! @unique
+    people: [Person!]! @relationship(type: "USES", direction: IN)
   }
 `;
 
