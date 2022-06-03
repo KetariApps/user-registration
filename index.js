@@ -8,10 +8,14 @@ const neoPass = process.env.NEOPASS;
 const neoUser = process.env.NEOUSER;
 
 const typeDefs = gql`
-  type Person {
+  type Person @node(label: "Person", additionalLabels: ["EmailList"]) {
     firstName: String!
     lastName: String!
     email: String!
+    usesApplication: [Application!]! @relationship(type: "USES", direction: OUT)
+  }
+  type Application {
+    name: String! @unique
   }
 `;
 
