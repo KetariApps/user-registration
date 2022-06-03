@@ -20,7 +20,6 @@ const typeDefs = gql`
     people: [Person!]! @relationship(type: "USES", direction: IN)
   }
 `;
-if (production !== "true") console.log(process.env);
 class BasicLogging {
   requestDidStart({ queryString, parsedQuery, variables }) {
     const query = queryString || print(parsedQuery);
@@ -32,7 +31,9 @@ class BasicLogging {
     console.log(JSON.stringify(graphqlResponse, null, 2));
   }
 }
+
 const driver = neo4j.driver(neoUri, neo4j.auth.basic(neoUser, neoPass));
+if (production !== "true") console.log(process.env, driver);
 
 const neoSchema = new Neo4jGraphQL({ typeDefs, driver });
 
