@@ -44,7 +44,7 @@ neoSchema.getSchema().then((schema) => {
     extensions: production !== "true" && [() => new BasicLogging()],
   });
 
-  server.listen().then(({ url }) => {
+  server.listen(port || 5000).then(({ url }) => {
     console.log(`GraphQL server ready on ${url}`);
   });
 });
