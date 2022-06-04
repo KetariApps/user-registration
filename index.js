@@ -10,14 +10,18 @@ const production = process.env.PRODUCTION;
 
 const typeDefs = gql`
   type Person @node(label: "Person", additionalLabels: ["EmailList"]) {
+    applications: [Application!]! @relationship(type: "USES", direction: OUT)
+    createdAt: DateTime! @timestamp(operations: [CREATE])
+    email: String!
     firstName: String!
     lastName: String!
-    email: String!
-    applications: [Application!]! @relationship(type: "USES", direction: OUT)
+    updatedAt: DateTime! @timestamp(operations: [UPDATE])
   }
   type Application {
+    createdAt: DateTime! @timestamp(operations: [CREATE])
     name: String! @unique
     people: [Person!]! @relationship(type: "USES", direction: IN)
+    updatedAt: DateTime! @timestamp(operations: [UPDATE])
   }
 `;
 class BasicLogging {
