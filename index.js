@@ -68,10 +68,10 @@ neoSchema.getSchema().then((schema) => {
   const server = new ApolloServer({
     schema: schema,
     introspection: production !== "true",
-    csrfPrevention: true,
-    cors: {
-      origin: ["https://www.ecubed.ai", "https://www.ketari.io"],
-    },
+    // csrfPrevention: true,
+    // cors: {
+    //   origin: ["https://www.ecubed.ai", "https://www.ketari.io"],
+    // },
   });
 
   server.listen(port || 5000).then(({ url }) => {
